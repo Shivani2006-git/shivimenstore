@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Urban Boys Accessories</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #121212; color: white; margin: 0; }
+        .navbar { background: #1f1f1f; padding: 20px 50px; border-bottom: 2px solid #00d2ff; text-align: center; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 40px; }
+        .card { background: #1e1e1e; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #333; }
+        .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
+        .price { font-size: 24px; color: #00ff88; font-weight: bold; margin: 15px 0; }
+        button { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .add-btn { background: #00d2ff; color: white; width: 100%; transition: 0.2s; }
+        .add-btn:active { transform: scale(0.95); } /* Visual click effect */
+        
+        /* Bottom Cart Bar */
+        .cart-bar { position: fixed; bottom: 0; width: 100%; background: #000; padding: 20px; display: flex; justify-content: space-around; border-top: 2px solid #00ff88; align-items: center; z-index: 100; }
+
+        /* Payment Popup */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+        .modal-content { background: white; color: black; padding: 30px; border-radius: 20px; text-align: center; width: 320px; }
+        .qr-img { width: 250px; height: auto; border: 1px solid #ddd; margin: 15px 0; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h1>URBAN BOYS COLLECTION</h1>
+</div>
+
+<div class="product-grid">
+    <div class="card">
+        <img src="/static/image/mama2.png" alt="Metal Bracelet">
+        <h3>Metal Bracelet</h3>
+        <p class="price">₹450</p>
+        <button class="add-btn" onclick="add(450)">Add to Cart</button>
+    </div>
+    <div class="card">
+        <img src="https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/45/3276113/1.jpg?7911" alt="Steel Cuban">
+        <h3>Ring</h3>
+        <p class="price">₹899</p>
+        <button class="add-btn" onclick="add(899)">Add to Cart</button>
+    </div>
+    <div class="card">
+        <img src="data:image/jpeg;base64,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" alt="Black Chain">
+        <h3>Black Chain</h3>
+        <p class="price">₹899</p>
+        <button class="add-btn" onclick="add(899)">Add to Cart</button>
+    </div>
+</div>
+
+<div class="cart-bar">
+    <span>Total Bill: <strong>₹<span id="t-price">0</span></strong></span>
+    <button onclick="openPayment()" style="background: #00ff88; color: black; padding: 12px 40px;">CHECKOUT NOW</button>
+</div>
+
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <h2 style="margin:0;">Scan & Pay</h2>
+        <p>Final Amount: <strong>₹<span id="pay-amount">0</span></strong></p>
+        
+        <img src="{{ url_for('static', filename='my_qr.jpg') }}" class="qr-img" alt="Payment QR">
+        
+        <p style="font-size: 13px; color: #555;">Scan with GPay, PhonePe or Paytm</p>
+        <button onclick="closePayment()" style="background: #ff4757; color: white; width: 100%;">Cancel</button>
+    </div>
+</div>
+
+<script>
+    let total = 0;
+
+    // 👇 THIS IS THE FIXED FUNCTION (Silent Add)
+    function add(price) {
+        total += price;
+        // This line updates the text at the bottom INSTANTLY
+        document.getElementById('t-price').innerText = total.toLocaleString('en-IN');
+        
+        // I removed the 'alert' line here, so no box will appear!
+    }
+
+    function openPayment() {
+        if (total === 0) {
+            // I removed the alert here too, so nothing happens if cart is empty
+            return;
+        }
+        document.getElementById('pay-amount').innerText = total.toLocaleString('en-IN');
+        document.getElementById('paymentModal').style.display = 'flex';
+    }
+
+    function closePayment() {
+        document.getElementById('paymentModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

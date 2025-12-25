@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shopify Clone - Login</title>
+
+    <style>
+
+        /* 1. Background Image (Shopping Related) */
+
+        body {
+
+            margin: 0;
+
+            padding: 0;
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+
+                        url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+
+            background-size: cover;
+
+            background-position: center;
+
+            height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+
+
+        /* 2. Glassmorphism Container */
+
+        .container {
+
+            background: rgba(255, 255, 255, 0.15);
+
+            backdrop-filter: blur(10px);
+
+            padding: 40px;
+
+            border-radius: 20px;
+
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            width: 350px;
+
+            color: white;
+
+            text-align: center;
+
+            animation: fadeIn 1s ease-in-out;
+
+        }
+
+
+
+        @keyframes fadeIn {
+
+            from { opacity: 0; transform: translateY(-20px); }
+
+            to { opacity: 1; transform: translateY(0); }
+
+        }
+
+
+
+        h2 { margin-bottom: 20px; font-weight: 300; }
+
+
+
+        input {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin: 10px 0;
+
+            border-radius: 25px;
+
+            border: none;
+
+            outline: none;
+
+            background: rgba(255, 255, 255, 0.2);
+
+            color: white;
+
+            box-sizing: border-box;
+
+        }
+
+
+
+        input::placeholder { color: #ddd; }
+
+
+
+        button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 20px;
+
+            border-radius: 25px;
+
+            border: none;
+
+            background: #ff4757;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+
+
+        button:hover { background: #ff6b81; transform: scale(1.05); }
+
+
+
+        .toggle-link {
+
+            margin-top: 15px;
+
+            display: block;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            text-decoration: underline;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+<div class="container">
+
+    <div id="form-content">
+
+        <h2 id="title">Create Account</h2>
+
+        <form action="/save-user" method="POST">
+
+            <input type="text" name="username" placeholder="Username" required>
+
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit" id="btn-text">Sign Up</button>
+
+        </form>
+
+        <span class="toggle-link" onclick="toggleForm()">Already have an account? Login</span>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    let isLogin = false;
+
+    function toggleForm() {
+
+        const title = document.getElementById('title');
+
+        const btnText = document.getElementById('btn-text');
+
+        const link = document.querySelector('.toggle-link');
+
+        const form = document.querySelector('form');
+
+
+
+        if (!isLogin) {
+
+            title.innerText = "Welcome Back";
+
+            btnText.innerText = "Login";
+
+            link.innerText = "New here? Create an account";
+
+            form.action = "/login"; // We need to add this route to app.py
+
+        } else {
+
+            title.innerText = "Create Account";
+
+            btnText.innerText = "Sign Up";
+
+            link.innerText = "Already have an account? Login";
+
+            form.action = "/save-user";
+
+        }
+
+        isLogin = !isLogin;
+
+    }
+
+</script>
+
+
+
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify Clone - Login</title>
+    <style>
+        /* 1. Background Image (Shopping Related) */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 2. Glassmorphism Container */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 350px;
+            color: white;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { margin-bottom: 20px; font-weight: 300; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-sizing: border-box;
+        }
+
+        input::placeholder { color: #ddd; }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border-radius: 25px;
+            border: none;
+            background: #ff4757;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { background: #ff6b81; transform: scale(1.05); }
+
+        .toggle-link {
+            margin-top: 15px;
+            display: block;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="form-content">
+        <h2 id="title">Create Account</h2>
+        <form action="/save-user" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" id="btn-text">Sign Up</button>
+        </form>
+        <span class="toggle-link" onclick="toggleForm()">Already have an account? Login</span>
+    </div>
+</div>
+
+<script>
+    let isLogin = false;
+    function toggleForm() {
+        const title = document.getElementById('title');
+        const btnText = document.getElementById('btn-text');
+        const link = document.querySelector('.toggle-link');
+        const form = document.querySelector('form');
+
+        if (!isLogin) {
+            title.innerText = "Welcome Back";
+            btnText.innerText = "Login";
+            link.innerText = "New here? Create an account";
+            form.action = "/login"; // We need to add this route to app.py
+        } else {
+            title.innerText = "Create Account";
+            btnText.innerText = "Sign Up";
+            link.innerText = "Already have an account? Login";
+            form.action = "/save-user";
+        }
+        isLogin = !isLogin;
+    }
+</script>
+
+</body>
+</html> -->
